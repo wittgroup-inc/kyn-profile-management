@@ -5,6 +5,8 @@ import java.util.Set;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.kyn.profile.model.Sex;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -34,8 +36,7 @@ public class User {
     @Size(max = 255)
     private String profilePicUrl;
 
-    @NotNull
-    private Integer sex;
+    private Sex sex;
 
     @DocumentReference(lazy = true)
     private Set<Address> addresses;
@@ -58,4 +59,5 @@ public class User {
     @Version
     private Integer version;
 
+    public static final User EMPTY = new User();
 }

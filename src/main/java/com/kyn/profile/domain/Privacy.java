@@ -2,6 +2,8 @@ package com.kyn.profile.domain;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
+
+import com.kyn.profile.model.Relation;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,17 +23,17 @@ public class Privacy {
     @Id
     private UUID id;
 
-    private Integer whoCanChat;
+    private Relation whoCanChat;
 
-    private Integer whoCanContact;
+    private Relation whoCanContact;
 
-    private Integer whoCanSeeAddress;
+    private Relation whoCanSeeAddress;
 
-    private Integer whoCanSearch;
+    private Relation whoCanSearch;
 
-    private Integer whoCanSendFriendRequest;
+    private Relation whoCanSendFriendRequest;
 
-    private Integer whoCanAddInGroup;
+    private Relation whoCanAddInGroup;
 
     @DocumentReference(lazy = true, lookup = "{ 'user' : ?#{#self._id} }")
     @ReadOnlyProperty
@@ -46,4 +48,5 @@ public class Privacy {
     @Version
     private Integer version;
 
+    public static final Privacy EMPTY = new Privacy();
 }

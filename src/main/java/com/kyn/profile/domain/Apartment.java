@@ -57,4 +57,5 @@ public class Apartment {
     @Version
     private Integer version;
 
+    public static final Apartment EMPTY = new Apartment();
 }

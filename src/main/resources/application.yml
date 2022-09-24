@@ -8,4 +8,4 @@ spring:
 springdoc:
   pathsToMatch: /api/**
 server:
-  port: 9001
+  port: 8080

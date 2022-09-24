@@ -24,7 +24,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final PrivacyRepository privacyRepository;
@@ -78,7 +77,7 @@ public class UserService {
         userDTO.setLastName(user.getLastName());
         userDTO.setProfilePicUrl(user.getProfilePicUrl());
         userDTO.setSex(user.getSex());
-        userDTO.setAddress(user.getAddresses() == null ? null : user.getAddresses().stream()
+        userDTO.setAddress(user.getAddresses() == null ? List.of() : user.getAddresses().stream()
                 .map(address -> address.getId())
                 .collect(Collectors.toList()));
         userDTO.setPrivacy(user.getPrivacy() == null ? null : user.getPrivacy().getId());
@@ -104,13 +103,13 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of address not found");
         }
         user.setAddresses(address.stream().collect(Collectors.toSet()));
-        final Privacy privacy = userDTO.getPrivacy() == null ? null : privacyRepository.findById(userDTO.getPrivacy())
+        final Privacy privacy = userDTO.getPrivacy() == null ? Privacy.EMPTY : privacyRepository.findById(userDTO.getPrivacy())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "privacy not found"));
         user.setPrivacy(privacy);
-        final Settings settings = userDTO.getSettings() == null ? null : settingsRepository.findById(userDTO.getSettings())
+        final Settings settings = userDTO.getSettings() == null ? Settings.EMPTY : settingsRepository.findById(userDTO.getSettings())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "settings not found"));
         user.setSettings(settings);
-        final Contact contact = userDTO.getContact() == null ? null : contactRepository.findById(userDTO.getContact())
+        final Contact contact = userDTO.getContact() == null ? Contact.EMPTY : contactRepository.findById(userDTO.getContact())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "contact not found"));
         user.setContact(contact);
         return user;

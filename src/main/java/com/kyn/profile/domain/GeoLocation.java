@@ -45,4 +45,5 @@ public class GeoLocation {
     @Version
     private Integer version;
 
+    public static final GeoLocation EMPTY = new GeoLocation();
 }

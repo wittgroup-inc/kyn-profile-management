@@ -42,4 +42,6 @@ public class Flat {
     @Version
     private Integer version;
 
+    public static final Flat EMPTY = new Flat();
+
 }

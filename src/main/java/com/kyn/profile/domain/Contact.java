@@ -62,4 +62,6 @@ public class Contact {
     @Version
     private Integer version;
 
+    public static final Contact EMPTY = new Contact();
+
 }

@@ -38,4 +38,5 @@ public class Address {
     @Version
     private Integer version;
 
+    public static final Address EMPTY = new Address();
 }

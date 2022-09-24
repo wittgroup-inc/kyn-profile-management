@@ -47,4 +47,5 @@ public class Settings {
     @Version
     private Integer version;
 
+    public static final Settings EMPTY = new Settings();
 }

@@ -52,4 +52,6 @@ public class Locality {
     @Version
     private Integer version;
 
+    public static final Locality EMPTY = new Locality();
+
 }
