@@ -49,10 +49,6 @@ public class Contact {
     @Size(max = 255)
     private String blogLink;
 
-    @DocumentReference(lazy = true, lookup = "{ 'user' : ?#{#self._id} }")
-    @ReadOnlyProperty
-    private User user;
-
     @CreatedDate
     private OffsetDateTime dateCreated;
 

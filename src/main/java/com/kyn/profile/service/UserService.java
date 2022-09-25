@@ -1,21 +1,15 @@
 package com.kyn.profile.service;
 
-import com.kyn.profile.domain.Address;
-import com.kyn.profile.domain.Contact;
-import com.kyn.profile.domain.Privacy;
-import com.kyn.profile.domain.Settings;
-import com.kyn.profile.domain.User;
+import com.kyn.profile.domain.*;
 import com.kyn.profile.model.UserDTO;
-import com.kyn.profile.repos.AddressRepository;
 import com.kyn.profile.repos.ContactRepository;
 import com.kyn.profile.repos.PrivacyRepository;
 import com.kyn.profile.repos.SettingsRepository;
 import com.kyn.profile.repos.UserRepository;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+
+import java.util.*;
 import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,17 +19,15 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
     private final PrivacyRepository privacyRepository;
     private final SettingsRepository settingsRepository;
     private final ContactRepository contactRepository;
 
     public UserService(final UserRepository userRepository,
-            final AddressRepository addressRepository, final PrivacyRepository privacyRepository,
-            final SettingsRepository settingsRepository,
-            final ContactRepository contactRepository) {
+                       final PrivacyRepository privacyRepository,
+                       final SettingsRepository settingsRepository,
+                       final ContactRepository contactRepository) {
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
         this.privacyRepository = privacyRepository;
         this.settingsRepository = settingsRepository;
         this.contactRepository = contactRepository;
@@ -97,12 +89,13 @@ public class UserService {
         user.setLastName(userDTO.getLastName());
         user.setProfilePicUrl(userDTO.getProfilePicUrl());
         user.setSex(userDTO.getSex());
-        final List<Address> address = iterableToList(addressRepository.findAllById(
-                userDTO.getAddress() == null ? Collections.emptyList() : userDTO.getAddress()));
-        if (address.size() != (userDTO.getAddress() == null ? 0 : userDTO.getAddress().size())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of address not found");
-        }
-        user.setAddresses(address.stream().collect(Collectors.toSet()));
+//        final List<Address> address = iterableToList(addressRepository.findAllById(
+//                userDTO.getAddress() == null ? Collections.emptyList() : userDTO.getAddress()));
+//        if (address.size() != (userDTO.getAddress() == null ? 0 : userDTO.getAddress().size())) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "one of address not found");
+//        }
+//        user.setAddresses(address.stream().collect(Collectors.toSet()));
+        user.setAddresses(Set.of());
         final Privacy privacy = userDTO.getPrivacy() == null ? Privacy.EMPTY : privacyRepository.findById(userDTO.getPrivacy())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "privacy not found"));
         user.setPrivacy(privacy);

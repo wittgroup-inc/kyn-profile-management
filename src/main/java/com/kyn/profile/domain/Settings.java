@@ -34,10 +34,6 @@ public class Settings {
     @Size(max = 255)
     private String registeredMobileNumber;
 
-    @DocumentReference(lazy = true, lookup = "{ 'user' : ?#{#self._id} }")
-    @ReadOnlyProperty
-    private User user;
-
     @CreatedDate
     private OffsetDateTime dateCreated;
 

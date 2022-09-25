@@ -1,19 +1,18 @@
 package com.kyn.profile.domain;
 
-import java.time.OffsetDateTime;
-import java.util.Set;
-import java.util.UUID;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 
 @Document
@@ -34,16 +33,8 @@ public class Apartment {
     @Size(max = 255)
     private String displayPicUrl;
 
-    @DocumentReference(lazy = true, lookup = "{ 'address' : ?#{#self._id} }")
-    @ReadOnlyProperty
-    private Address address;
-
-    @DocumentReference(lazy = true, lookup = "{ 'flats' : ?#{#self._id} }")
-    @ReadOnlyProperty
-    private Set<Flat> flats;
-
     @DocumentReference(lazy = true)
-    private Locality locality;
+    private Flat flat;
 
     @DocumentReference(lazy = true)
     private GeoLocation geoLocation;

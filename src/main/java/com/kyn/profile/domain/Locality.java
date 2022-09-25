@@ -1,19 +1,18 @@
 package com.kyn.profile.domain;
 
-import java.time.OffsetDateTime;
-import java.util.Set;
-import java.util.UUID;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.ReadOnlyProperty;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
 
 @Document
@@ -36,9 +35,8 @@ public class Locality {
     @Size(max = 255)
     private String pinCode;
 
-    @DocumentReference(lazy = true, lookup = "{ 'apartments' : ?#{#self._id} }")
-    @ReadOnlyProperty
-    private Set<Apartment> apartments;
+    @DocumentReference(lazy = true)
+    private Apartment apartment;
 
     @DocumentReference(lazy = true)
     private GeoLocation geoLocation;

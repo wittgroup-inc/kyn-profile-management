@@ -35,10 +35,6 @@ public class Privacy {
 
     private Relation whoCanAddInGroup;
 
-    @DocumentReference(lazy = true, lookup = "{ 'user' : ?#{#self._id} }")
-    @ReadOnlyProperty
-    private User user;
-
     @CreatedDate
     private OffsetDateTime dateCreated;
 
