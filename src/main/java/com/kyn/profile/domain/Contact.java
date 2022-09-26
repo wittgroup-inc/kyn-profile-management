@@ -14,13 +14,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 
-@Document
 @Getter
 @Setter
 public class Contact {
-
-    @Id
-    private UUID id;
 
     @Size(max = 255)
     private String email;
@@ -48,15 +44,6 @@ public class Contact {
 
     @Size(max = 255)
     private String blogLink;
-
-    @CreatedDate
-    private OffsetDateTime dateCreated;
-
-    @LastModifiedDate
-    private OffsetDateTime lastUpdated;
-
-    @Version
-    private Integer version;
 
     public static final Contact EMPTY = new Contact();
 

@@ -15,13 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 
-@Document
 @Getter
 @Setter
 public class Privacy {
-
-    @Id
-    private UUID id;
 
     private Relation whoCanChat;
 
@@ -34,15 +30,6 @@ public class Privacy {
     private Relation whoCanSendFriendRequest;
 
     private Relation whoCanAddInGroup;
-
-    @CreatedDate
-    private OffsetDateTime dateCreated;
-
-    @LastModifiedDate
-    private OffsetDateTime lastUpdated;
-
-    @Version
-    private Integer version;
 
     public static final Privacy EMPTY = new Privacy();
 }

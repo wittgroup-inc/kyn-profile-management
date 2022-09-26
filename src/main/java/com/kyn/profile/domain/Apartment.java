@@ -7,7 +7,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,10 +32,6 @@ public class Apartment {
     @Size(max = 255)
     private String displayPicUrl;
 
-    @DocumentReference(lazy = true)
-    private Flat flat;
-
-    @DocumentReference(lazy = true)
     private GeoLocation geoLocation;
 
     @CreatedDate

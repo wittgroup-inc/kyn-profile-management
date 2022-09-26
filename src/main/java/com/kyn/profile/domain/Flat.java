@@ -2,25 +2,13 @@ package com.kyn.profile.domain;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import javax.validation.constraints.Size;
-import java.time.OffsetDateTime;
-import java.util.UUID;
 
 
-@Document
 @Getter
 @Setter
 public class Flat {
-
-    @Id
-    private UUID id;
 
     @Size(max = 255)
     private String flatNumber;
@@ -30,18 +18,6 @@ public class Flat {
 
     @Size(max = 255)
     private String floor;
-
-    @DocumentReference(lazy = true)
-    private Apartment apartment;
-
-    @CreatedDate
-    private OffsetDateTime dateCreated;
-
-    @LastModifiedDate
-    private OffsetDateTime lastUpdated;
-
-    @Version
-    private Integer version;
 
     public static final Flat EMPTY = new Flat();
 

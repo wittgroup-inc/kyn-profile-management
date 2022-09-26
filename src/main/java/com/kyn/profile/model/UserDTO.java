@@ -1,10 +1,13 @@
 package com.kyn.profile.model;
 
 import java.util.List;
-import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.kyn.profile.domain.Address;
+import com.kyn.profile.domain.Contact;
+import com.kyn.profile.domain.Privacy;
+import com.kyn.profile.domain.Settings;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +15,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
-
-    private UUID id;
 
     @NotNull
     @Size(max = 255)
@@ -28,12 +29,12 @@ public class UserDTO {
 
     private Sex sex;
 
-    private List<UUID> address;
+    private List<Address> address;
 
-    private UUID privacy;
+    private Privacy privacy;
 
-    private UUID settings;
+    private Settings settings;
 
-    private UUID contact;
+    private Contact contact;
 
 }

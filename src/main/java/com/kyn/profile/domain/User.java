@@ -1,7 +1,7 @@
 package com.kyn.profile.domain;
 
 import java.time.OffsetDateTime;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,7 +23,7 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 public class User {
 
     @Id
-    private UUID id;
+    private java.util.UUID id;
 
     @NotNull
     @Size(max = 255)
@@ -38,16 +38,16 @@ public class User {
 
     private Sex sex;
 
-    @DocumentReference(lazy = true)
-    private Set<Address> addresses;
+    //@DocumentReference(lazy = true)
+    private List<UUID> addresses;
 
-    @DocumentReference(lazy = true)
+    //@DocumentReference(lazy = true)
     private Privacy privacy;
 
-    @DocumentReference(lazy = true)
+    //@DocumentReference(lazy = true)
     private Settings settings;
 
-    @DocumentReference(lazy = true)
+    //@DocumentReference(lazy = true)
     private Contact contact;
 
     @CreatedDate

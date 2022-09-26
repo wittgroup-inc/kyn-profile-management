@@ -14,14 +14,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 
-@Document
+
 @Getter
 @Setter
 public class Settings {
-
-    @Id
-    private UUID id;
-
     @Size(max = 255)
     private String username;
 
@@ -33,15 +29,6 @@ public class Settings {
 
     @Size(max = 255)
     private String registeredMobileNumber;
-
-    @CreatedDate
-    private OffsetDateTime dateCreated;
-
-    @LastModifiedDate
-    private OffsetDateTime lastUpdated;
-
-    @Version
-    private Integer version;
 
     public static final Settings EMPTY = new Settings();
 }
