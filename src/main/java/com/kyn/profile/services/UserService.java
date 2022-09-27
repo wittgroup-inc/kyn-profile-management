@@ -1,8 +1,9 @@
-package com.kyn.profile.service;
+package com.kyn.profile.services;
 
-import com.kyn.profile.domain.*;
-import com.kyn.profile.model.UserDTO;
-import com.kyn.profile.repos.UserRepository;
+import com.kyn.profile.db.entities.*;
+import com.kyn.profile.db.repositories.UserRepository;
+import com.kyn.profile.models.User;
+import com.kyn.profile.models.Address;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,9 +17,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
 
+    private UserRepository userRepository;
     private RestTemplate restTemplate;
+
 
     public UserService(final UserRepository userRepository,
                        final RestTemplate restTemplate) {
@@ -26,37 +28,37 @@ public class UserService {
         this.restTemplate = restTemplate;
     }
 
-    public List<UserDTO> findAll() {
+    public List<User> findAll() {
         return userRepository.findAll(Sort.by("id"))
                 .stream()
-                .map(user -> mapToDTO(user, new UserDTO()))
+                .map(entity -> mapToUser(entity, new User()))
                 .collect(Collectors.toList());
     }
 
-    public UserDTO get(final UUID id) {
+    public User get(final UUID id) {
         return userRepository.findById(id)
-                .map(user -> mapToDTO(user, new UserDTO()))
+                .map(entity -> mapToUser(entity, new User()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public UUID create(final UserDTO userDTO) {
-        final User user = new User();
-        mapToEntity(userDTO, user);
-        return userRepository.save(user).getId();
+    public UUID create(final User user) {
+        final UserEntity entity = new UserEntity();
+        mapToUserEntity(user, entity);
+        return userRepository.save(entity).getId();
     }
 
-    public void update(final UUID id, final UserDTO userDTO) {
-        final User user = userRepository.findById(id)
+    public void update(final UUID id, final User user) {
+        final UserEntity entity = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        mapToEntity(userDTO, user);
-        userRepository.save(user);
+        mapToUserEntity(user, entity);
+        userRepository.save(entity);
     }
 
     public void delete(final UUID id) {
         userRepository.deleteById(id);
     }
 
-    private UserDTO mapToDTO(final User user, final UserDTO userDTO) {
+    private User mapToUser(final UserEntity user, final User userDTO) {
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setProfilePicUrl(user.getProfilePicUrl());
@@ -68,16 +70,16 @@ public class UserService {
         return userDTO;
     }
 
-    private User mapToEntity(final UserDTO userDTO, final User user) {
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setProfilePicUrl(userDTO.getProfilePicUrl());
-        user.setSex(userDTO.getSex());
-        user.setAddresses(userDTO.getAddress().stream().map(this::createAddress).map(Address::getId).toList());
-        user.setPrivacy(userDTO.getPrivacy());
-        user.setSettings(userDTO.getSettings());
-        user.setContact(userDTO.getContact());
-        return user;
+    private UserEntity mapToUserEntity(final User user, final UserEntity entity) {
+        entity.setFirstName(user.getFirstName());
+        entity.setLastName(user.getLastName());
+        entity.setProfilePicUrl(user.getProfilePicUrl());
+        entity.setSex(user.getSex());
+        entity.setAddresses(user.getAddress().stream().map(this::createAddress).map(Address::getId).toList());
+        entity.setPrivacy(user.getPrivacy());
+        entity.setSettings(user.getSettings());
+        entity.setContact(user.getContact());
+        return entity;
     }
 
 

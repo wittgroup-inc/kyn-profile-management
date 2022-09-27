@@ -1,7 +1,7 @@
 package com.kyn.profile.config;
 
-import com.kyn.profile.model.ErrorResponse;
-import com.kyn.profile.model.FieldError;
+import com.kyn.profile.models.ErrorResponse;
+import com.kyn.profile.models.FieldError;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import java.util.stream.Collectors;

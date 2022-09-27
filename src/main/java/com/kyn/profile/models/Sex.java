@@ -1,4 +1,4 @@
-package com.kyn.profile.model;
+package com.kyn.profile.models;
 
 
 public enum Sex {

@@ -1,7 +1,7 @@
-package com.kyn.profile.rest;
+package com.kyn.profile.api;
 
-import com.kyn.profile.model.UserDTO;
-import com.kyn.profile.service.UserService;
+import com.kyn.profile.models.User;
+import com.kyn.profile.services.UserService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import java.util.UUID;
@@ -30,24 +30,24 @@ public class UserResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable final UUID id) {
+    public ResponseEntity<User> getUser(@PathVariable final UUID id) {
         return ResponseEntity.ok(userService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<UUID> createUser(@RequestBody @Valid final UserDTO userDTO) {
+    public ResponseEntity<UUID> createUser(@RequestBody @Valid final User userDTO) {
         return new ResponseEntity<>(userService.create(userDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable final UUID id,
-            @RequestBody @Valid final UserDTO userDTO) {
+            @RequestBody @Valid final User userDTO) {
         userService.update(id, userDTO);
         return ResponseEntity.ok().build();
     }

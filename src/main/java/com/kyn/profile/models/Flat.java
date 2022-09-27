@@ -1,4 +1,4 @@
-package com.kyn.profile.domain;
+package com.kyn.profile.models;
 
 import lombok.Getter;
 import lombok.Setter;

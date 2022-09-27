@@ -1,4 +1,4 @@
-package com.kyn.profile.model;
+package com.kyn.profile.models;
 
 import java.util.List;
 import lombok.Getter;

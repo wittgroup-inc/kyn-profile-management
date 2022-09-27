@@ -1,7 +1,7 @@
 package com.kyn.profile.config;
 
-import com.kyn.profile.util.MongoOffsetDateTimeReader;
-import com.kyn.profile.util.MongoOffsetDateTimeWriter;
+import com.kyn.profile.utils.MongoOffsetDateTimeReader;
+import com.kyn.profile.utils.MongoOffsetDateTimeWriter;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 
 @Configuration
-@EnableMongoRepositories("com.kyn.profile.repos")
+@EnableMongoRepositories("com.kyn.profile.db.repositories")
 @EnableMongoAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
 public class MongoConfig {
 

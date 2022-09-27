@@ -1,4 +1,4 @@
-package com.kyn.profile.domain;
+package com.kyn.profile.db.entities;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -6,7 +6,10 @@ import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.kyn.profile.model.Sex;
+import com.kyn.profile.models.Sex;
+import com.kyn.profile.models.Contact;
+import com.kyn.profile.models.Privacy;
+import com.kyn.profile.models.Settings;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -14,13 +17,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 
-@Document
+@Document("user")
 @Getter
 @Setter
-public class User {
+public class UserEntity {
 
     @Id
     private java.util.UUID id;
@@ -59,5 +61,5 @@ public class User {
     @Version
     private Integer version;
 
-    public static final User EMPTY = new User();
+    public static final UserEntity EMPTY = new UserEntity();
 }
