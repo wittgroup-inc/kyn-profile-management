@@ -84,14 +84,14 @@ public class UserService {
 
 
     private Address findAddressById(UUID uuid) throws ResponseStatusException {
-        return restTemplate.getForObject("http://localhost:8082/api/address/" + uuid, Address.class);
+        return restTemplate.getForObject("http://address-management/api/address/" + uuid, Address.class);
     }
 
     private Address createAddress(Address address) {
         Address found = findAddressById(address.getId());
         if (found != null)
             return found;
-        return restTemplate.postForObject("http://localhost:8082/api/address", address, Address.class);
+        return restTemplate.postForObject("http://address-management/api/address", address, Address.class);
     }
 
 }
