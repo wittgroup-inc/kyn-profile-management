@@ -1,4 +1,4 @@
-package com.kyn.profile.domain;
+package com.kyn.profile.models;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,15 +33,6 @@ public class Apartment {
     private String displayPicUrl;
 
     private GeoLocation geoLocation;
-
-    @CreatedDate
-    private OffsetDateTime dateCreated;
-
-    @LastModifiedDate
-    private OffsetDateTime lastUpdated;
-
-    @Version
-    private Integer version;
 
     public static final Apartment EMPTY = new Apartment();
 }

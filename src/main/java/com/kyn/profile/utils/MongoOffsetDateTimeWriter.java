@@ -1,4 +1,4 @@
-package com.kyn.profile.util;
+package com.kyn.profile.utils;
 
 import java.time.OffsetDateTime;
 import java.util.Date;

@@ -1,20 +1,16 @@
-package com.kyn.profile.model;
+package com.kyn.profile.models;
 
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.kyn.profile.domain.Address;
-import com.kyn.profile.domain.Contact;
-import com.kyn.profile.domain.Privacy;
-import com.kyn.profile.domain.Settings;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
-public class UserDTO {
+public class User {
 
     @NotNull
     @Size(max = 255)
