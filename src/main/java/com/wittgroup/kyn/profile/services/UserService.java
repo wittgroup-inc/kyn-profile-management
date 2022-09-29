@@ -1,6 +1,5 @@
 package com.wittgroup.kyn.profile.services;
 
-import com.kyn.profile.db.entities.*;
 import com.wittgroup.kyn.profile.db.repositories.UserRepository;
 import com.wittgroup.kyn.profile.models.User;
 import com.wittgroup.kyn.profile.models.Address;
