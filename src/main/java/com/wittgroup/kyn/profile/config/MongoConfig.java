@@ -18,7 +18,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 
 @Configuration
-@EnableMongoRepositories("com.kyn.profile.db.repositories")
+@EnableMongoRepositories("com.wittgroup.kyn.profile.db.repositories")
 @EnableMongoAuditing(dateTimeProviderRef = "auditingDateTimeProvider")
 public class MongoConfig {
 
