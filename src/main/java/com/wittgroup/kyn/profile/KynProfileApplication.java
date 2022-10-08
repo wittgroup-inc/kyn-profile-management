@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class ProfileApplication {
+public class KynProfileApplication {
 
     public static void main(final String[] args) {
-        SpringApplication.run(ProfileApplication.class, args);
+        SpringApplication.run(KynProfileApplication.class, args);
     }
 
     @Bean
