@@ -2,3 +2,24 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
+    loadbalancer:
+      ribbon:
+        enabled: false
+  data:
+    mongodb:
+      uri: ${MONGODB_DATABASE_URL:mongodb+srv://pawan6186:AKNQzcWBpaYJ3aaW@cluster0.vx89hdm.mongodb.net/?retryWrites=true&w=majority}
+  application:
+    name: profile-management
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/microservices-realm
+
+springdoc:
+  pathsToMatch: /api/**
+server:
+  port: 8081
+eureka:
+  instance:
+    hostname: localhost
