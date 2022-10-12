@@ -1,5 +1,6 @@
 package com.wittgroup.kyn.profile.services;
 
+import com.wittgroup.kyn.profile.client.AddressClient;
 import com.wittgroup.kyn.profile.db.repositories.UserRepository;
 import com.wittgroup.kyn.profile.models.User;
 import com.wittgroup.kyn.profile.models.Address;
@@ -8,10 +9,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.wittgroup.kyn.profile.db.entities.UserEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -19,13 +21,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class UserService {
 
     private UserRepository userRepository;
-    private RestTemplate restTemplate;
+    private AddressClient addressClient;
 
 
     public UserService(final UserRepository userRepository,
-                       final RestTemplate restTemplate) {
+                       final AddressClient addressClient) {
         this.userRepository = userRepository;
-        this.restTemplate = restTemplate;
+        this.addressClient = addressClient;
     }
 
     public List<User> findAll() {
@@ -84,14 +86,14 @@ public class UserService {
 
 
     private Address findAddressById(UUID uuid) throws ResponseStatusException {
-        return restTemplate.getForObject("http://address-management/api/address/" + uuid, Address.class);
+        return addressClient.getAddressById(uuid.toString());
     }
 
     private Address createAddress(Address address) {
         Address found = findAddressById(address.getId());
         if (found != null)
             return found;
-        return restTemplate.postForObject("http://address-management/api/address", address, Address.class);
+        return addressClient.createAddress(address);
     }
 
 }
