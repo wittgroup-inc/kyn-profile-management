@@ -18,8 +18,16 @@ spring:
 
 springdoc:
   pathsToMatch: /api/**
+
 server:
   port: 8081
+
 eureka:
   instance:
     hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

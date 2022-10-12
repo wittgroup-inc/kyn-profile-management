@@ -49,12 +49,12 @@ dependencies {
     testCompileOnly('org.projectlombok:lombok')
     testAnnotationProcessor('org.projectlombok:lombok')
 
+    //Actuator
+    implementation ('org.springframework.boot:spring-boot-starter-actuator')
+
     //Resource Server
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    //Actuator
-    implementation ('org.springframework.boot:spring-boot-starter-actuator')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 
