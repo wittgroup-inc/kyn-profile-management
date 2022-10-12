@@ -14,5 +14,4 @@ public interface AddressClient {
 
     @PostMapping("/api/address")
     Address createAddress(@RequestBody Address address);
-
 }
