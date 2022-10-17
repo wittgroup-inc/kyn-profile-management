@@ -15,6 +15,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8180/realms/microservices-realm
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 springdoc:
   pathsToMatch: /api/**
