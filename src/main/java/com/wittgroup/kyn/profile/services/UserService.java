@@ -60,7 +60,7 @@ public class UserService {
     }
 
     public void update(final UUID id, final User user) {
-        UserEntity entity = userRepository.findById(id)
+        final UserEntity entity = userRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         mapToUserEntity(user, entity);
         userRepository.save(entity);
@@ -84,7 +84,7 @@ public class UserService {
         return user;
     }
 
-    private UserEntity mapToUserEntity(final User user, UserEntity entity) {
+    private UserEntity mapToUserEntity(final User user, final UserEntity entity) {
         entity.setId(user.getId());
         entity.setFirstName(user.getFirstName());
         entity.setLastName(user.getLastName());
