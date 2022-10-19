@@ -1,13 +1,11 @@
 package com.wittgroup.kyn.profile.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.validation.constraints.Size;
 
 
-@Getter
-@Setter
+@Data
 public class Flat {
 
     @Size(max = 255)

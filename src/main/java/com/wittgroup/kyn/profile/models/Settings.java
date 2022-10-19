@@ -2,28 +2,33 @@ package com.wittgroup.kyn.profile.models;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import lombok.Data;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 
-@Getter
-@Setter
+@Data
 public class Settings {
-    @NotNull
+
+    @NonNull @NotNull
     @Size(max = 255)
+    @Indexed(unique = true)
     private String username;
 
-    @NotNull
+    @NotNull @NonNull
     @Size(max = 255)
     private String password;
 
-    @NotNull
+    @NotNull @NonNull
     @Size(max = 255)
+    @Indexed(unique = true)
     private String primaryEmail;
 
-    @NotNull
     @Size(max = 255)
+    @Indexed(unique = true)
     private String registeredMobileNumber;
 
-    public static final Settings EMPTY = new Settings();
 }

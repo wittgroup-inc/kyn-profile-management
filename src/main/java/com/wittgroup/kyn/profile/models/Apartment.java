@@ -1,24 +1,18 @@
 package com.wittgroup.kyn.profile.models;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Data;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.UUID;
 
 
-@Document
-@Getter
-@Setter
+@Data
 public class Apartment {
 
-    @Id
     private UUID id;
 
-    @NotNull
     @Size(max = 255)
     private String holdingNumber;
 
