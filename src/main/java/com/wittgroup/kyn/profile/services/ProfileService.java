@@ -1,14 +1,14 @@
 package com.wittgroup.kyn.profile.services;
 
 import com.wittgroup.kyn.profile.client.AddressClient;
-import com.wittgroup.kyn.profile.db.repositories.UserRepository;
+import com.wittgroup.kyn.profile.db.repositories.ProfileRepository;
 import com.wittgroup.kyn.profile.models.*;
 
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import com.wittgroup.kyn.profile.db.entities.UserEntity;
+import com.wittgroup.kyn.profile.db.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreaker;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
@@ -21,82 +21,82 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class ProfileService {
 
-    private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
     private final AddressClient addressClient;
     private final Resilience4JCircuitBreakerFactory circuitBreakerFactory;
 
 
-    public List<User> findAll() {
-        return userRepository.findAll(Sort.by("id"))
+    public List<Profile> findAll() {
+        return profileRepository.findAll(Sort.by("id"))
                 .stream()
-                .map(this::mapToUser)
+                .map(this::mapToProfile)
                 .collect(Collectors.toList());
     }
 
-    public User get(final UUID id) {
-        return userRepository.findById(id)
-                .map(this::mapToUser)
+    public Profile get(final UUID id) {
+        return profileRepository.findById(id)
+                .map(this::mapToProfile)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public UUID create(final User user) {
-        return userRepository.save(mapToUserEntity(user, new UserEntity())).getId();
+    public UUID create(final Profile profile) {
+        return profileRepository.save(mapToProfileEntity(profile, new ProfileEntity())).getId();
     }
 
-    public User signUp(SignUpRequest request) {
-        Settings settings = new Settings(getValidUserName(IdGenerator.generateUsername()), request.getPassword(), request.getEmail());
-        User user = new User(request.getFirstName(), request.getLastName(), request.getDob(), request.getSex(), Privacy.DEFAULT, settings);
-        return mapToUser(userRepository.save(mapToUserEntity(user, new UserEntity())));
+    public Profile createUser(User user) {
+        Settings settings = new Settings(getValidUserName(IdGenerator.generateUsername()), user.getPassword(), user.getEmail());
+        Profile profile = new Profile(user.getFirstName(), user.getLastName(), user.getDob(), user.getSex(), Privacy.DEFAULT, settings);
+        return mapToProfile(profileRepository.save(mapToProfileEntity(profile, new ProfileEntity())));
     }
 
     private String getValidUserName(String username) {
-        Optional<UserEntity> user = userRepository.findBySettingsUsername(username);
+        Optional<ProfileEntity> user = profileRepository.findBySettingsUsername(username);
         if (user.isPresent()) {
             getValidUserName(IdGenerator.generateUsername());
         }
         return username;
     }
 
-    public void update(final UUID id, final User user) {
-        final UserEntity entity = userRepository.findById(id)
+    public void update(final UUID id, final Profile profile) {
+        final ProfileEntity entity = profileRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        mapToUserEntity(user, entity);
-        userRepository.save(entity);
+        mapToProfileEntity(profile, entity);
+        profileRepository.save(entity);
     }
 
     public void delete(final UUID id) {
-        userRepository.deleteById(id);
+        profileRepository.deleteById(id);
     }
 
-    private User mapToUser(final UserEntity entity) {
-        User user = new User(entity.getFirstName(), entity.getLastName(), entity.getDob(), entity.getSex(), entity.getPrivacy(), entity.getSettings());
-        user.setId(entity.getId());
-        user.setProfilePicUrl(entity.getProfilePicUrl());
-        user.setSex(entity.getSex());
+    private Profile mapToProfile(final ProfileEntity entity) {
+        Profile profile = new Profile(entity.getFirstName(), entity.getLastName(), entity.getDob(), entity.getSex(), entity.getPrivacy(), entity.getSettings());
+        profile.setId(entity.getId());
+        profile.setProfilePicUrl(entity.getProfilePicUrl());
+        profile.setSex(entity.getSex());
         if (entity.getAddresses() != null) {
-            user.setAddress(entity.getAddresses().isEmpty() ? List.of() : entity.getAddresses().stream().map(this::findAddressById).toList());
+            profile.setAddress(entity.getAddresses().isEmpty() ? List.of() : entity.getAddresses().stream().map(this::findAddressById).toList());
         }
-        user.setPrivacy(entity.getPrivacy());
-        user.setSettings(entity.getSettings());
-        user.setContact(entity.getContact());
-        return user;
+        profile.setPrivacy(entity.getPrivacy());
+        profile.setSettings(entity.getSettings());
+        profile.setContact(entity.getContact());
+        return profile;
     }
 
-    private UserEntity mapToUserEntity(final User user, final UserEntity entity) {
-        entity.setId(user.getId());
-        entity.setFirstName(user.getFirstName());
-        entity.setLastName(user.getLastName());
-        entity.setDob(user.getDob());
-        entity.setProfilePicUrl(user.getProfilePicUrl());
-        entity.setSex(user.getSex());
-        if (user.getAddress() != null) {
-            entity.setAddresses(user.getAddress().stream().map(this::createAddress).map(Address::getId).toList());
+    private ProfileEntity mapToProfileEntity(final Profile profile, final ProfileEntity entity) {
+        entity.setId(profile.getId());
+        entity.setFirstName(profile.getFirstName());
+        entity.setLastName(profile.getLastName());
+        entity.setDob(profile.getDob());
+        entity.setProfilePicUrl(profile.getProfilePicUrl());
+        entity.setSex(profile.getSex());
+        if (profile.getAddress() != null) {
+            entity.setAddresses(profile.getAddress().stream().map(this::createAddress).map(Address::getId).toList());
         }
-        entity.setPrivacy(user.getPrivacy());
-        entity.setSettings(user.getSettings());
-        entity.setContact(user.getContact());
+        entity.setPrivacy(profile.getPrivacy());
+        entity.setSettings(profile.getSettings());
+        entity.setContact(profile.getContact());
         return entity;
     }
 

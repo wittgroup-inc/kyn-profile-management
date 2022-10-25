@@ -1,10 +1,8 @@
 package com.wittgroup.kyn.profile.api;
 
-import com.wittgroup.kyn.profile.models.Privacy;
-import com.wittgroup.kyn.profile.models.Settings;
-import com.wittgroup.kyn.profile.models.SignUpRequest;
+import com.wittgroup.kyn.profile.models.Profile;
 import com.wittgroup.kyn.profile.models.User;
-import com.wittgroup.kyn.profile.services.UserService;
+import com.wittgroup.kyn.profile.services.ProfileService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import java.util.UUID;
@@ -25,45 +23,45 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/profiles", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class UserResource {
+public class ProfileResource {
 
-    private final UserService userService;
+    private final ProfileService profileService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.findAll());
+    public ResponseEntity<List<Profile>> getAllProfile() {
+        return ResponseEntity.ok(profileService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable final UUID id) {
-        return ResponseEntity.ok(userService.get(id));
+    public ResponseEntity<Profile> getProfile(@PathVariable final UUID id) {
+        return ResponseEntity.ok(profileService.get(id));
     }
 
     @PostMapping
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<UUID> createUser(@RequestBody @Valid final User user) {
-        return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
+    public ResponseEntity<UUID> createProfile(@RequestBody @Valid final Profile profile) {
+        return new ResponseEntity<>(profileService.create(profile), HttpStatus.CREATED);
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/createUser")
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<User> signUp(@RequestBody @Valid final SignUpRequest request) {
-        return new ResponseEntity<>(userService.signUp(request), HttpStatus.CREATED);
+    public ResponseEntity<Profile> createUser(@RequestBody @Valid final User user) {
+        return new ResponseEntity<>(profileService.createUser(user), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable final UUID id,
-            @RequestBody @Valid final User userDTO) {
-        userService.update(id, userDTO);
+    public ResponseEntity<Void> updateProfile(@PathVariable final UUID id,
+                                              @RequestBody @Valid final Profile profileDTO) {
+        profileService.update(id, profileDTO);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     @ApiResponse(responseCode = "204")
-    public ResponseEntity<Void> deleteUser(@PathVariable final UUID id) {
-        userService.delete(id);
+    public ResponseEntity<Void> deleteProfile(@PathVariable final UUID id) {
+        profileService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

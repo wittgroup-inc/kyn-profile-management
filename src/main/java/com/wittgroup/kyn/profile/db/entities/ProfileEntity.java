@@ -20,10 +20,10 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document("user")
+@Document("profile")
 @Getter
 @Setter
-public class UserEntity {
+public class ProfileEntity {
 
     @Id
     private java.util.UUID id;
@@ -64,5 +64,5 @@ public class UserEntity {
     @Version
     private Integer version;
 
-    public static final UserEntity EMPTY = new UserEntity();
+    public static final ProfileEntity EMPTY = new ProfileEntity();
 }
