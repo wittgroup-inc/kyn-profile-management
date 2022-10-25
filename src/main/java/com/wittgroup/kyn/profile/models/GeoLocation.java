@@ -1,20 +1,19 @@
 package com.wittgroup.kyn.profile.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotNull;
 
 
-@Getter
-@Setter
+@Data
 public class GeoLocation {
 
-    @NotNull
+    @NotNull @NonNull
     private Long latitude;
 
-    @NotNull
+    @NotNull @NonNull
     private Long longitude;
 
-    public static final GeoLocation EMPTY = new GeoLocation();
+    public static final GeoLocation EMPTY = new GeoLocation(0L, 0L);
 }

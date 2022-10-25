@@ -1,18 +1,22 @@
 package com.wittgroup.kyn.profile.models;
 
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wittgroup.kyn.profile.validators.birthdate.DateOfBirth;
 import lombok.Data;
 import lombok.NonNull;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-import java.util.Date;
 
 @Data
-public class User {
+public class Profile {
+
+    private UUID id;
 
     @NotNull @NonNull
     @Size(max = 255)
@@ -28,15 +32,20 @@ public class User {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date dob;
 
+    @Size(max = 255)
+    private String profilePicUrl;
+
     @NotNull @NonNull
     private Sex sex;
 
-    @NotNull @NonNull
-    @Size(max = 255)
-    @Email
-    private String email;
+    private List<Address> address;
 
     @NotNull @NonNull
-    @Size(max = 255)
-    private String password;
+    private Privacy privacy;
+
+    @NotNull @NonNull
+    private Settings settings;
+
+    private Contact contact;
+
 }

@@ -2,10 +2,8 @@ package com.wittgroup.kyn.profile.client;
 
 import com.wittgroup.kyn.profile.models.Address;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "address-management")
 public interface AddressClient {
@@ -14,4 +12,7 @@ public interface AddressClient {
 
     @PostMapping("/api/address")
     Address createAddress(@RequestBody Address address);
+
+    @PutMapping("/api/address/{id}")
+    ResponseEntity<Void> updateAddress(@PathVariable String id, @RequestBody Address address);
 }

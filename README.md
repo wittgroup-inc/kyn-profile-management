@@ -28,6 +28,6 @@ java -Dspring.profiles.active=production -jar ./build/libs/profile-0.0.1-SNAPSHO
 
 ## Further readings
 
-* [Gradle user manual](https://docs.gradle.org/)  
+* [Gradle profile manual](https://docs.gradle.org/)  
 * [Spring Boot reference](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/)  
 * [Spring Data MongoDB reference](https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/)  

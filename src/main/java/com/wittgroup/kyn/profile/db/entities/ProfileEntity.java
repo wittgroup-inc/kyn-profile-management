@@ -1,6 +1,7 @@
 package com.wittgroup.kyn.profile.db.entities;
 
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
@@ -19,10 +20,10 @@ import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-@Document("user")
+@Document("profile")
 @Getter
 @Setter
-public class UserEntity {
+public class ProfileEntity {
 
     @Id
     private java.util.UUID id;
@@ -35,21 +36,23 @@ public class UserEntity {
     @Size(max = 255)
     private String lastName;
 
+    @NotNull
+    private Date dob;
+
     @Size(max = 255)
     private String profilePicUrl;
 
+    @NotNull
     private Sex sex;
 
-    //@DocumentReference(lazy = true)
     private List<UUID> addresses;
 
-    //@DocumentReference(lazy = true)
+    @NotNull
     private Privacy privacy;
 
-    //@DocumentReference(lazy = true)
+    @NotNull
     private Settings settings;
 
-    //@DocumentReference(lazy = true)
     private Contact contact;
 
     @CreatedDate
@@ -61,5 +64,5 @@ public class UserEntity {
     @Version
     private Integer version;
 
-    public static final UserEntity EMPTY = new UserEntity();
+    public static final ProfileEntity EMPTY = new ProfileEntity();
 }
