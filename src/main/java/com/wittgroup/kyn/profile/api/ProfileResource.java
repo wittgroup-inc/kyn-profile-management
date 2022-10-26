@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,8 +48,13 @@ public class ProfileResource {
 
     @PostMapping("/createUser")
     @ApiResponse(responseCode = "201")
-    public ResponseEntity<Profile> createUser(@RequestBody @Valid final User user) {
+    public ResponseEntity<UUID> createUser(@RequestBody @Valid final User user) {
         return new ResponseEntity<>(profileService.createUser(user), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/loadUser/{q}")
+    public ResponseEntity<User> loadUser(@PathVariable final String q) {
+        return ResponseEntity.ok(profileService.findUserByUsernameOrEmailOrMobileNumber(q));
     }
 
     @PutMapping("/{id}")

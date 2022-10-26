@@ -45,10 +45,12 @@ public class ProfileService {
         return profileRepository.save(mapToProfileEntity(profile, new ProfileEntity())).getId();
     }
 
-    public Profile createUser(User user) {
+    public UUID createUser(User user) {
+        if (isUserExists(user.getUserName(), user.getEmail(), user.getMobileNumber()))
+            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
         Settings settings = new Settings(getValidUserName(IdGenerator.generateUsername()), user.getPassword(), user.getEmail());
         Profile profile = new Profile(user.getFirstName(), user.getLastName(), user.getDob(), user.getSex(), Privacy.DEFAULT, settings);
-        return mapToProfile(profileRepository.save(mapToProfileEntity(profile, new ProfileEntity())));
+        return mapToProfile(profileRepository.save(mapToProfileEntity(profile, new ProfileEntity()))).getId();
     }
 
     private String getValidUserName(String username) {
@@ -57,6 +59,11 @@ public class ProfileService {
             getValidUserName(IdGenerator.generateUsername());
         }
         return username;
+    }
+
+    private boolean isUserExists(String username, String email, String mobileNumber) {
+        Optional<ProfileEntity> user = profileRepository.findBySettingsUsernameOrSettingsPrimaryEmailOrSettingsRegisteredMobileNumber(username, email, mobileNumber);
+        return user.isPresent();
     }
 
     public void update(final UUID id, final Profile profile) {
@@ -68,6 +75,18 @@ public class ProfileService {
 
     public void delete(final UUID id) {
         profileRepository.deleteById(id);
+    }
+
+    public User findUserByUsernameOrEmailOrMobileNumber(String q) {
+        return profileRepository.findBySettingsUsernameOrSettingsPrimaryEmailOrSettingsRegisteredMobileNumber(q, q, q).map(this::toUser).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    private User toUser(ProfileEntity entity) {
+        User user = new User(entity.getFirstName(), entity.getLastName(), entity.getDob(), entity.getSex(), entity.getSettings().getPrimaryEmail(), entity.getSettings().getPassword());
+        user.setId(entity.getId());
+        user.setUserName(entity.getSettings().getUsername());
+        user.setMobileNumber(entity.getSettings().getRegisteredMobileNumber());
+        return user;
     }
 
     private Profile mapToProfile(final ProfileEntity entity) {
