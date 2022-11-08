@@ -46,8 +46,7 @@ public class ProfileService {
     }
 
     public UUID createUser(User user) {
-        if (isUserExists(user.getUserName(), user.getEmail(), user.getMobileNumber()))
-            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
+        isUserAlreadyExists(user.getUserName(), user.getEmail(), user.getMobileNumber());
         Settings settings = new Settings(getValidUserName(IdGenerator.generateUsername()), user.getPassword(), user.getEmail());
         Profile profile = new Profile(user.getFirstName(), user.getLastName(), user.getDob(), user.getSex(), Privacy.DEFAULT, settings);
         return mapToProfile(profileRepository.save(mapToProfileEntity(profile, new ProfileEntity()))).getId();
@@ -61,9 +60,35 @@ public class ProfileService {
         return username;
     }
 
+    private boolean isUserAlreadyExists(String username, String email, String mobileNumber) throws ResponseStatusException {
+        Optional<ProfileEntity> user;
+        if (username != null && mobileNumber != null) {
+            user = profileRepository.findBySettingsUsernameOrSettingsPrimaryEmailOrSettingsRegisteredMobileNumber(username, email, mobileNumber);
+        } else if (username == null && mobileNumber != null) {
+            user = profileRepository.findBySettingsPrimaryEmailOrSettingsRegisteredMobileNumber(email, mobileNumber);
+        } else if (username != null) {
+            user = profileRepository.findBySettingsUsernameOrSettingsPrimaryEmail(username, email);
+        } else {
+            user = profileRepository.findBySettingsPrimaryEmail(email);
+        }
+
+        if (user.isPresent()) {
+            String reason = (user.get().getSettings().getUsername().equals(username) ? "Username: " + username + " " : "") +
+                    (user.get().getSettings().getPrimaryEmail().equals(email) ? "Email: " + email + " " : "") +
+                    (user.get().getSettings().getRegisteredMobileNumber().equals(mobileNumber) ? "Mobile Number: " + mobileNumber + " " : "") +
+                    "already registered with us.";
+            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, reason, new RuntimeException(reason));
+        }
+
+        return false;
+    }
+
     private boolean isUserExists(String username, String email, String mobileNumber) {
-        Optional<ProfileEntity> user = profileRepository.findBySettingsUsernameOrSettingsPrimaryEmailOrSettingsRegisteredMobileNumber(username, email, mobileNumber);
-        return user.isPresent();
+        try {
+            return isUserAlreadyExists(username, email, mobileNumber);
+        } catch (ResponseStatusException e) {
+            return true;
+        }
     }
 
     public void update(final UUID id, final Profile profile) {
