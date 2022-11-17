@@ -64,20 +64,37 @@ public class ProfileService {
         Optional<ProfileEntity> user;
         if (username != null && mobileNumber != null) {
             user = profileRepository.findBySettingsUsernameOrSettingsPrimaryEmailOrSettingsRegisteredMobileNumber(username, email, mobileNumber);
+            if (user.isPresent()) {
+                String reason = (user.get().getSettings().getUsername().equals(username) ? "Username: " + username + ", " : "") +
+                        (user.get().getSettings().getPrimaryEmail().equals(email) ? "Email: " + email + " and " : "") +
+                        (user.get().getSettings().getRegisteredMobileNumber().equals(mobileNumber) ? "Mobile Number: " + mobileNumber + " " : "") +
+                        "already registered with us.";
+                throw new ResponseStatusException(HttpStatus.CONFLICT, reason);
+            }
         } else if (username == null && mobileNumber != null) {
             user = profileRepository.findBySettingsPrimaryEmailOrSettingsRegisteredMobileNumber(email, mobileNumber);
+
+            if (user.isPresent()) {
+                String reason = (user.get().getSettings().getPrimaryEmail().equals(email) ? "Email: " + email + " and " : "") +
+                        (user.get().getSettings().getRegisteredMobileNumber().equals(mobileNumber) ? "Mobile Number: " + mobileNumber + " " : "") +
+                        "are already registered with us.";
+                throw new ResponseStatusException(HttpStatus.CONFLICT, reason);
+            }
         } else if (username != null) {
             user = profileRepository.findBySettingsUsernameOrSettingsPrimaryEmail(username, email);
+            if (user.isPresent()) {
+                String reason = (user.get().getSettings().getUsername().equals(username) ? "Username: " + username + " and " : "") +
+                        (user.get().getSettings().getPrimaryEmail().equals(email) ? "Email: " + email + " " : "") +
+                        "are already registered with us.";
+                throw new ResponseStatusException(HttpStatus.CONFLICT, reason);
+            }
         } else {
             user = profileRepository.findBySettingsPrimaryEmail(email);
-        }
-
-        if (user.isPresent()) {
-            String reason = (user.get().getSettings().getUsername().equals(username) ? "Username: " + username + " " : "") +
-                    (user.get().getSettings().getPrimaryEmail().equals(email) ? "Email: " + email + " " : "") +
-                    (user.get().getSettings().getRegisteredMobileNumber().equals(mobileNumber) ? "Mobile Number: " + mobileNumber + " " : "") +
-                    "already registered with us.";
-            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, reason, new RuntimeException(reason));
+            if (user.isPresent()) {
+                String reason = (user.get().getSettings().getPrimaryEmail().equals(email) ? "Email: " + email + " " : "") +
+                        "already registered with us.";
+                throw new ResponseStatusException(HttpStatus.CONFLICT, reason);
+            }
         }
 
         return false;
