@@ -28,7 +28,6 @@ public class Settings {
     private String primaryEmail;
 
     @Size(max = 255)
-    @Indexed(unique = true)
     private String registeredMobileNumber;
 
 }
