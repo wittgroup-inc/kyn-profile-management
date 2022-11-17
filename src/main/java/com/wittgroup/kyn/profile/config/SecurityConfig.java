@@ -17,15 +17,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeRequests(authorize -> authorize.anyRequest().permitAll())
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/profiles/loadUser/**")
+                .permitAll()
+                .antMatchers("/api/profiles/createUser")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic()
+                .and()
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
 
         return httpSecurity.build();
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/api/profiles/createUser", "/api/profiles/loadUser");
     }
 
     @PostConstruct
