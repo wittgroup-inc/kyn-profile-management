@@ -1,16 +1,16 @@
 package com.gowittgroup.kyn.profile.models;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gowittgroup.kyn.profile.validators.birthdate.DateOfBirth;
 import lombok.Data;
 import lombok.NonNull;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 
 @Data

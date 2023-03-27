@@ -1,6 +1,7 @@
 package com.gowittgroup.kyn.profile.models;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NonNull;
 
 import javax.validation.constraints.NotNull;
 

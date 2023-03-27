@@ -1,9 +1,10 @@
 package com.gowittgroup.kyn.profile.utils;
 
-import java.time.OffsetDateTime;
-import java.util.Date;
 import org.bson.Document;
 import org.springframework.core.convert.converter.Converter;
+
+import java.time.OffsetDateTime;
+import java.util.Date;
 
 
 public class MongoOffsetDateTimeWriter implements Converter<OffsetDateTime, Document> {

@@ -2,10 +2,6 @@ package com.gowittgroup.kyn.profile.config;
 
 import com.gowittgroup.kyn.profile.utils.MongoOffsetDateTimeReader;
 import com.gowittgroup.kyn.profile.utils.MongoOffsetDateTimeWriter;
-
-import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.Optional;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.auditing.DateTimeProvider;
@@ -16,6 +12,10 @@ import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.Optional;
 
 
 @Configuration

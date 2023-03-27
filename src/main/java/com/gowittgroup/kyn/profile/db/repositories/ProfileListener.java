@@ -1,11 +1,11 @@
 package com.gowittgroup.kyn.profile.db.repositories;
 
 import com.gowittgroup.kyn.profile.db.entities.ProfileEntity;
-import java.util.UUID;
-
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 
 @Component

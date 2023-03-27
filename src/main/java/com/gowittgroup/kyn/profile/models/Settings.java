@@ -1,13 +1,11 @@
 package com.gowittgroup.kyn.profile.models;
 
+import lombok.Data;
+import lombok.NonNull;
+import org.springframework.data.mongodb.core.index.Indexed;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import lombok.Data;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import org.springframework.data.mongodb.core.index.Indexed;
 
 
 @Data

@@ -1,15 +1,9 @@
 package com.gowittgroup.kyn.profile.services;
 
 import com.gowittgroup.kyn.profile.client.AddressClient;
+import com.gowittgroup.kyn.profile.db.entities.ProfileEntity;
 import com.gowittgroup.kyn.profile.db.repositories.ProfileRepository;
 import com.gowittgroup.kyn.profile.models.*;
-import com.wittgroup.kyn.profile.models.*;
-
-import java.util.*;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-
-import com.gowittgroup.kyn.profile.db.entities.ProfileEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreaker;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
@@ -18,6 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 
 @Service

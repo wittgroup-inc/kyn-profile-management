@@ -1,7 +1,6 @@
 package com.gowittgroup.kyn.profile.models;
 
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.validation.constraints.Size;
 import java.util.UUID;
